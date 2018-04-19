@@ -13,9 +13,11 @@ link_directories(libftprintf)
 link_libraries(ftprintf)
 
 set(HEADERS
-        includes/lem_in.h includes/lem_in.h)
+        includes/lem_in.h
+        )
 
 set(SOURCES
-        sources/main.c)
+        sources/main.c
+        )
 
 add_executable(lem_in ${SOURCES} ${HEADERS})

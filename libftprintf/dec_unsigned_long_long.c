@@ -88,16 +88,18 @@ static void	fill_zero(t_specification spec, char *str)
 	g_return += ft_strlen(str);
 }
 
-void		dec_unsigned_long_long(unsigned long long nbr, t_specification spec)
+void		dec_unsigned_long_long(void *data, t_specification *spec)
 {
-	char	*str;
+	unsigned long long	nbr;
+	char				*str;
 
+	nbr = giv_me_correct_unsigned_nbr(data, spec->modifier, spec->type);
 	str = ft_ulltoa_base(nbr, DEC);
-	if (spec.flags.minus == true)
-		left_align(spec, str);
-	else if (spec.flags.zero == false)
-		right_align(spec, str);
+	if (spec->flags.minus == true)
+		left_align(*spec, str);
+	else if (spec->flags.zero == false)
+		right_align(*spec, str);
 	else
-		fill_zero(spec, str);
+		fill_zero(*spec, str);
 	ft_strdel(&str);
 }

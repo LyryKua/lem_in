@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: khrechen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/20 16:45:00 by khrechen          #+#    #+#             */
-/*   Updated: 2018/03/20 16:45:00 by khrechen         ###   ########.fr       */
+/*   Created: 2016/12/23 13:06:15 by khrechen          #+#    #+#             */
+/*   Updated: 2016/12/23 13:28:06 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
-#include "get_next_line.h"
 
-int	main(void)
+void	ft_lstdel(t_list **alst, void (*del)(void*, size_t))
 {
-	char	*line;
+	t_list	*tmp;
 
-	while (get_next_line(STDIN_FILENO, &line) == 1)
+	while (*alst)
 	{
-		ft_putendl(line);
-		ft_strdel(&line);
+		tmp = (*alst)->next;
+		ft_lstdelone(alst, del);
+		*alst = tmp;
 	}
-	return 0;
 }

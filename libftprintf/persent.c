@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   persent.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/20 16:45:00 by khrechen          #+#    #+#             */
-/*   Updated: 2018/03/20 16:45:00 by khrechen         ###   ########.fr       */
+/*   Created: 2018/02/09 14:41:00 by khrechen          #+#    #+#             */
+/*   Updated: 2018/02/09 14:41:00 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
-#include "get_next_line.h"
+#include <string.h>
+#include "ft_printf.h"
 
-int	main(void)
+void		empty(void *data, t_specification *spec)
 {
-	char	*line;
-
-	while (get_next_line(STDIN_FILENO, &line) == 1)
-	{
-		ft_putendl(line);
-		ft_strdel(&line);
-	}
-	return 0;
+	if (spec->type == '%')
+		c_lower_case((void *)'%', spec);
+	data = NULL;
 }

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: khrechen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/20 16:45:00 by khrechen          #+#    #+#             */
-/*   Updated: 2018/03/20 16:45:00 by khrechen         ###   ########.fr       */
+/*   Created: 2016/12/23 13:39:41 by khrechen          #+#    #+#             */
+/*   Updated: 2016/12/23 13:42:41 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
-#include "get_next_line.h"
 
-int	main(void)
+void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	char	*line;
+	t_list	*tmp;
 
-	while (get_next_line(STDIN_FILENO, &line) == 1)
+	while (lst)
 	{
-		ft_putendl(line);
-		ft_strdel(&line);
+		tmp = lst->next;
+		f(lst);
+		lst = tmp;
 	}
-	return 0;
 }

@@ -15,16 +15,19 @@
 
 # include <stdarg.h>
 # include <stdbool.h>
+# include <string.h>
 
 # define BIN	2
 # define OCT	8
 # define DEC	10
 # define HEX	16
 
-int				g_return;
+int	g_return;
 
 typedef struct s_specification	t_specification;
 typedef struct s_flag			t_flag;
+typedef struct s_conversions	t_conversions;
+typedef void					(*t_func_ptr)(void *, t_specification *);
 
 /*
 ** '#' - hash
@@ -35,54 +38,54 @@ typedef struct s_flag			t_flag;
 **
 ** z > j > ll > l > h > hh
 **
-** sSpdDioOuUxXcC
+** sSpdDioOuUxX cC
 */
-struct			s_flag
+struct				s_flag
 {
-	bool		hash;
-	bool		zero;
-	bool		minus;
-	bool		plus;
-	bool		space;
+	bool			hash;
+	bool			zero;
+	bool			minus;
+	bool			plus;
+	bool			space;
 };
 
-struct			s_specification
+struct				s_specification
 {
-	t_flag		flags;
-	int			width;
-	int			precision;
-	char		*modifier;
-	char		type;
+	t_flag			flags;
+	int				width;
+	int				precision;
+	char			*modifier;
+	char			type;
 };
 
-int				ft_printf(const char *format, ...);
-char			*get_replacing_specification(const char *format);
+struct				s_conversions
+{
+	void			*data;
+	t_specification	spec;
+	void			(*foo)(void *, t_specification *);
+};
 
-void			parse_print(char *replacing_spec, va_list ap);
-t_specification	get_specification(char *replacing_spec, va_list ap,
-																void **data);
-void			print_data(void *data, t_specification spec);
+int					ft_printf(const char *format, ...);
 
-void			s_lower_case(char *str, t_specification spec);
-void			s_upper_case(unsigned int *str, t_specification spec);
-void			p_lower_case(unsigned long long ptr, t_specification spec);
-void			c_lower_case(char chr, t_specification spec);
-void			c_upper_case(unsigned int chr, t_specification spec);
+t_specification		get_specification(const char *format, va_list *ap,
+													void **data, size_t *step);
+t_func_ptr			get_foo(char type);
 
-void			dec_long_long(long long nbr, t_specification spec);
-void			dec_unsigned_long_long(unsigned long long nbr,
-														t_specification spec);
-void			bin_unsigned_long_long(unsigned long long nbr,
-														t_specification spec);
-void			oct_unsigned_long_long(unsigned long long nbr,
-														t_specification spec);
-void			hex_unsigned_long_long(unsigned long long nbr,
-														t_specification spec);
+void				dec_long_long(void *data, t_specification *spec);
+void				dec_unsigned_long_long(void *data, t_specification *spec);
+void				bin_unsigned_long_long(void *data, t_specification *spec);
+void				oct_unsigned_long_long(void *data, t_specification *spec);
+void				hex_unsigned_long_long(void *data, t_specification *spec);
+void				c_lower_case(void *data, t_specification *spec);
+void				c_upper_case(void *data, t_specification *spec);
+void				s_lower_case(void *data, t_specification *spec);
+void				s_upper_case(void *data, t_specification *spec);
+void				p_lower_case(void *data, t_specification *spec);
+void				empty(void *data, t_specification *spec);
 
-void			di_with_len(void *data, t_specification spec);
-void			o_with_len(void *data, t_specification spec);
-void			u_with_len(void *data, t_specification spec);
-void			x_with_len(void *data, t_specification spec);
-void			b_with_len(void *data, t_specification spec);
+long long			giv_me_correct_signed_nbr(void *data, char *modifier,
+																	char type);
+unsigned long long	giv_me_correct_unsigned_nbr(void *data, char *modifier,
+																	char type);
 
 #endif

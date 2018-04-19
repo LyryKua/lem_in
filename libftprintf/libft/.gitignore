@@ -1,13 +1,4 @@
-.DS_Store
-
-printf_main.c
-printf_main2.c
-*.a
-
-cmake-build-debug/
-.idea/
 objs/
+libft.a
 
-tmp*
-a.out
-CMakeLists.txt
+ft_printf

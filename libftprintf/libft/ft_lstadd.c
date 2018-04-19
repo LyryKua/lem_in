@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: khrechen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/20 16:45:00 by khrechen          #+#    #+#             */
-/*   Updated: 2018/03/20 16:45:00 by khrechen         ###   ########.fr       */
+/*   Created: 2016/12/23 13:29:04 by khrechen          #+#    #+#             */
+/*   Updated: 2016/12/23 15:28:24 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
-#include "get_next_line.h"
 
-int	main(void)
+void	ft_lstadd(t_list **alst, t_list *new)
 {
-	char	*line;
-
-	while (get_next_line(STDIN_FILENO, &line) == 1)
+	if (alst && new)
 	{
-		ft_putendl(line);
-		ft_strdel(&line);
+		new->next = *alst;
+		*alst = new;
 	}
-	return 0;
 }

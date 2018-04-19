@@ -2,6 +2,7 @@
 
 printf_main.c
 printf_main2.c
+main.c
 *.a
 
 cmake-build-debug/
@@ -11,3 +12,6 @@ objs/
 tmp*
 a.out
 CMakeLists.txt
+
+README.md
+khrechen

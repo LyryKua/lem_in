@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: khrechen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/20 16:45:00 by khrechen          #+#    #+#             */
-/*   Updated: 2018/03/20 16:45:00 by khrechen         ###   ########.fr       */
+/*   Created: 2016/12/23 13:43:36 by khrechen          #+#    #+#             */
+/*   Updated: 2016/12/23 14:56:13 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
-#include "get_next_line.h"
 
-int	main(void)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	char	*line;
+	t_list	*fresh;
+	t_list	*tmp;
 
-	while (get_next_line(STDIN_FILENO, &line) == 1)
+	if (!lst || !f)
+		return (0);
+	tmp = f(lst);
+	fresh = tmp;
+	while (lst->next)
 	{
-		ft_putendl(line);
-		ft_strdel(&line);
+		lst = lst->next;
+		tmp->next = f(lst);
+		tmp = tmp->next;
 	}
-	return 0;
+	return (fresh);
 }

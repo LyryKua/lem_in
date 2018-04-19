@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_print.c                                      :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: khrechen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/05 13:00:00 by khrechen          #+#    #+#             */
-/*   Updated: 2018/03/20 16:37:16 by khrechen         ###   ########.fr       */
+/*   Created: 2016/12/23 12:59:18 by khrechen          #+#    #+#             */
+/*   Updated: 2016/12/23 13:27:41 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include "ft_printf.h"
+#include <stdlib.h>
 #include "libft.h"
 
-void	parse_print(char *replacing_spec, va_list ap)
+void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {
-	void			*data;
-	t_specification	spec;
-
-	data = va_arg(ap, void *);
-	spec = get_specification(replacing_spec, ap, &data);
-	print_data(data, spec);
-	ft_strdel(&spec.modifier);
+	del((*alst)->content, (*alst)->content_size);
+	free(*alst);
+	*alst = NULL;
 }

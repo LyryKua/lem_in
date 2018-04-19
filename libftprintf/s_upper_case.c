@@ -43,27 +43,44 @@ static void	right_align(int width, unsigned int *str, int len)
 	s_print(str, len);
 }
 
-void		s_upper_case(unsigned int *str, t_specification spec)
+static int	operand(unsigned int nbr)
+{
+	int	op;
+
+	op = 1;
+	if (nbr < 0x80)
+		op = 1;
+	else if (nbr < 0x7ff)
+		op = 2;
+	else if (nbr < 0xffff)
+		op = 3;
+	else if (nbr < 0x1fffff)
+		op = 4;
+	return (op);
+}
+
+void		s_upper_case(void *data, t_specification *spec)
 {
 	int				len;
 	size_t			i;
+	unsigned int	*str;
 
+	str = (unsigned int *)data;
+	if (str == NULL)
+	{
+		ft_putstr("(null)");
+		g_return += 6;
+		return ;
+	}
 	i = 0;
 	len = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] < 0x80)
-			len += 1;
-		else if (str[i] < 0x7ff)
-			len += 2;
-		else if (str[i] < 0xffff)
-			len += 3;
-		else if (str[i] < 0x1fffff)
-			len += 4;
+		len += operand(str[i]);
 		i++;
 	}
-	if (spec.flags.minus == true)
-		left_align(spec.width, str, len);
+	if (spec->flags.minus == true)
+		left_align(spec->width, str, len);
 	else
-		right_align(spec.width, str, len);
+		right_align(spec->width, str, len);
 }

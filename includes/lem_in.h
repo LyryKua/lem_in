@@ -13,4 +13,23 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+typedef struct s_room	t_room;
+
+enum	e_status
+{
+	usual,
+	start,
+	end
+};
+
+struct	s_room
+{
+	char			*name;
+	int				x;
+	int				y;
+	enum e_status	status;
+	unsigned int	number_ants;
+	t_room			*next;
+};
+
 #endif

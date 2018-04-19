@@ -6,7 +6,7 @@
 #    By: khrechen <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/14 14:55:42 by khrechen          #+#    #+#              #
-#    Updated: 2018/03/20 16:35:43 by khrechen         ###   ########.fr        #
+#    Updated: 2018/02/05 14:57:52 by khrechen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,13 @@ PART2 :=		ft_memalloc.c		\
 				ft_putendl_fd.c		\
 				ft_putnbr_fd.c
 
+PART3 :=		ft_lstnew.c			\
+				ft_lstdelone.c		\
+				ft_lstdel.c			\
+				ft_lstadd.c			\
+				ft_lstiter.c		\
+				ft_lstmap.c
+
 MY_PART :=		ft_isspace.c		\
 				ft_abs.c			\
 				ft_labs.c			\
@@ -95,7 +102,7 @@ MY_PART :=		ft_isspace.c		\
 
 GNL :=			get_next_line.c
 
-SRCS :=			$(PART1) $(PART2) $(MY_PART) $(GNL)
+SRCS :=			$(PART1) $(PART2) $(PART3) $(MY_PART) $(GNL)
 
 OBJS_DIR :=		objects/
 OBJS :=			$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
@@ -114,7 +121,7 @@ $(NAME): $(OBJS)
 	ranlib $(NAME)
 
 $(OBJS_DIR)%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@ 
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJS): | $(OBJS_DIR)
 
@@ -128,3 +135,9 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+norm:
+	norminette $(SRCS) $(INC_DIR)libft.h $(INC_DIR)get_next_line.h
+
+pu:
+	git add author .gitignore Makefile $(SRCS) $(INC_DIR)libft.h $(INC_DIR)get_next_line.h
