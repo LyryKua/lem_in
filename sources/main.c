@@ -50,31 +50,42 @@ bool is_valid_room(char **tbl)
 	words = 0;
 	while (tbl[words])
 		words++;
-	return (words != 3 || !ft_isnumber(tbl[1]) || !ft_isnumber(tbl[2]) ? false : true);
+	return (words != 3 || !ft_isnumber(tbl[1]) || !ft_isnumber(tbl[2]) ? false
+																	   : true);
+}
+
+bool is_start_or_end(const char *line)
+{
+	return (ft_strequ(line, "##start") || ft_strequ(line, "##end") ? true
+																   : false);
+}
+
+bool is_comment(const char *line)
+{
+	return (*line == '#' ? true : false);
 }
 
 t_room get_room(char *line)
 {
 	t_room room;
 	char **tbl;
+	int i;
 
 	tbl = ft_strsplit(line, ' ');
-	if (is_valid_room(tbl))
+	if (!is_valid_room(tbl))
+		error_exit("Wrong input for room!\nFormat: [name] [x] [y]");
+	room.name = ft_strdup(tbl[0]);
+	room.x = ft_atoi(tbl[1]);
+	room.y = ft_atoi(tbl[2]);
+	room.status = usual;
+	room.number_ants = 0;
+	i = 0;
+	while (tbl[i])
 	{
-
+		ft_strdel(&tbl[i]);
+		i++;
 	}
-
 	return (room);
-}
-
-bool is_start_or_end(const char *line)
-{
-	return (ft_strequ(line, "##start") || ft_strequ(line, "##end") ? true : false);
-}
-
-bool is_comment(const char *line)
-{
-	return (*line == '#' ? true : false);
 }
 
 int main(void)
@@ -93,8 +104,9 @@ int main(void)
 			continue;
 		}
 		room = get_room(line);
+		/**/print_room(room);
 		ft_putendl(line);
 		ft_strdel(&line);
 	}
-	return 0;
+	return (0);
 }
