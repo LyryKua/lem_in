@@ -33,7 +33,8 @@ SRCS_DIR :=				sources/
 
 OBJS_DIR :=				objects/
 
-SRCS :=					main.c
+SRCS :=					main.c			\
+						error_exit.c
 
 OBJS :=					$(SRCS:.c=.o)
 
@@ -48,7 +49,7 @@ CC :=					gcc
 INC :=					-I$(LIBFTPRINTF_DIR)includes/		\
 						-I$(LIBFTPRINTF_DIR)libft/includes	\
 						-I$(INC_DIR)
-CFLAGS :=				-Wall -Werror -Wextra
+#CFLAGS :=				-Wall -Werror -Wextra
 LIBFTPRINTF_FLAGS :=	-L$(LIBFTPRINTF_DIR) -lftprintf
 
 all: $(NAME)

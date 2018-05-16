@@ -98,7 +98,8 @@ MY_PART :=		ft_isspace.c		\
 				ft_uitoa_base.c		\
 				ft_ultoa_base.c		\
 				ft_ulltoa_base.c	\
-				ft_putunichar.c
+				ft_putunichar.c		\
+				ft_isnumber.c
 
 GNL :=			get_next_line.c
 

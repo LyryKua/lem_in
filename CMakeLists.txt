@@ -18,6 +18,7 @@ set(HEADERS
 
 set(SOURCES
         sources/main.c
+        sources/error_exit.c
         )
 
 add_executable(lem_in ${SOURCES} ${HEADERS})

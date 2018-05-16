@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khrechen <khrechen@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,27 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
+#include "libft.h"
 
-typedef struct s_room	t_room;
-
-enum	e_status
+int	ft_isnumber(char *line)
 {
-	usual,
-	start,
-	end
-};
-
-struct	s_room
-{
-	char			*name;
-	int				x;
-	int				y;
-	enum e_status	status;
-	unsigned int	number_ants;
-};
-
-void error_exit(char *msg);
-
-#endif
+	while (*line)
+	{
+		if (!ft_isdigit(*line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
