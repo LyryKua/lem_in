@@ -107,15 +107,36 @@ void print_room(t_room room)
 	printf("\nnumber_ants = %d\n\n", room.number_ants);
 }
 
+void p(t_list *lst)
+{
+	t_room room;
+
+	room = *(t_room *)lst->content;
+	printf(" -> room\nname: %s\n(%d, %d)\nstatus: ", room.name, room.x, room.y);
+	switch (room.status)
+	{
+		case start:
+			printf("start");
+			break;
+		case end:
+			printf("end");
+			break;
+		default:
+			printf("usual");
+	}
+	printf("\nnumber_ants = %d\n\n", room.number_ants);
+}
+
 int main(void)
 {
 	char *line;
 	int ants;
-	t_list lst;
+	t_list *lst;
 	t_room room;
 	enum e_status status;
 
 	ants = get_number_of_ants();
+	lst = NULL;
 	while (get_next_line(STDIN_FILENO, &line) == 1)
 	{
 		if (is_comment(line))
@@ -133,11 +154,14 @@ int main(void)
 			if (get_next_line(STDIN_FILENO, &line) != 1)
 				error_exit("After ##start or ##end should be a room!");
 			if (*line == '#' || *line == 'L')
-				error_exit("A room will never start with the character 'L' nor the character '#'");
+				error_exit(
+						"A room will never start with the character 'L' nor the character '#'");
 		}
 		room = get_room(line, status);
+		ft_lstadd(&lst, ft_lstnew(&room, sizeof(room)));
 		ft_putendl(line);
 		ft_strdel(&line);
 	}
+	while(42);
 	return (0);
 }
