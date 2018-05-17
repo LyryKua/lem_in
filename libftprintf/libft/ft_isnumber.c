@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_isnumber(char *line)
+int	ft_isnumber(const char *line)
 {
 	while (*line)
 	{
