@@ -14,11 +14,11 @@ link_libraries(ftprintf)
 
 set(HEADERS
         includes/lem_in.h
-        )
+        includes/tmp.h)
 
 set(SOURCES
         sources/main.c
         sources/error_exit.c
-        )
+        sources/print_room.c)
 
 add_executable(lem_in ${SOURCES} ${HEADERS})

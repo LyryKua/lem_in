@@ -105,6 +105,6 @@ char				*ft_uitoa_base(unsigned int value, int base);
 char				*ft_ultoa_base(unsigned long value, int base);
 char				*ft_ulltoa_base(unsigned long long value, int base);
 void				ft_putunichar(unsigned int c);
-int					ft_isnumber(char *line);
+int					ft_isnumber(const char *line);
 
 #endif

@@ -14,9 +14,6 @@
 # define GET_NEXT_LINE_H
 
 # define BUFF_SIZE	1024
-# define ERROR		-1
-# define FINISH		0
-# define READ		1
 
 int	get_next_line(const int fd, char **line);
 

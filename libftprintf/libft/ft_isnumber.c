@@ -14,6 +14,8 @@
 
 int	ft_isnumber(const char *line)
 {
+	if (!ft_strlen(line))
+		return (0);
 	while (*line)
 	{
 		if (!ft_isdigit(*line))

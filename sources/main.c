@@ -19,39 +19,26 @@
 
 /**/#include <printf.h>
 
-int get_number_of_ants(void)
-{
-	int ants;
-	char *line;
-
-	ants = 0;
-	while (get_next_line(STDIN_FILENO, &line) == 1)
-	{
-		if (ft_isdigit(*line))
-		{
-			ft_putendl(line);
-			ants = ft_atoi(line);
-			ft_strdel(&line);
-			break;
-		}
-		else
-		{
-			ft_strdel(&line);
-			error_exit("The rooms’ coordinates should be integers.");
-		}
-	}
-	return (ants);
-}
-
-bool is_valid_room(char **tbl)
+bool is_room(char *line)
 {
 	int words;
+	char **tbl;
+	bool answer;
 
+	tbl = ft_strsplit(line, ' ');
 	words = 0;
 	while (tbl[words])
 		words++;
-	return (words != 3 || !ft_isnumber(tbl[1]) || !ft_isnumber(tbl[2]) ? false
-																	   : true);
+	if (words == 3 && tbl[0][0] != 'L' && tbl[0][0] != '#'
+		&& ft_isnumber(tbl[1]) && ft_isnumber(tbl[2]))
+		answer = true;
+	else
+		answer = false;
+	words = 0;
+	while (tbl[words])
+		ft_strdel(&tbl[words++]);
+	free(tbl);
+	return (answer);
 }
 
 bool is_start_or_end(const char *line)
@@ -73,7 +60,8 @@ t_room get_room(char *line, enum e_status status)
 	int i;
 
 	tbl = ft_strsplit(line, ' ');
-	if (!is_valid_room(tbl))
+
+	if (!is_room(tbl))
 		error_exit("Wrong input for room!\nFormat: [name coord_x coord_y]");
 	room.name = ft_strdup(tbl[0]);
 	room.x = ft_atoi(tbl[1]);
@@ -90,78 +78,39 @@ t_room get_room(char *line, enum e_status status)
 	return (room);
 }
 
-void print_room(t_room room)
+int get_number_of_ants()
 {
-	printf(" -> room\nname: %s\n(%d, %d)\nstatus: ", room.name, room.x, room.y);
-	switch (room.status)
-	{
-		case start:
-			printf("start");
-			break;
-		case end:
-			printf("end");
-			break;
-		default:
-			printf("usual");
-	}
-	printf("\nnumber_ants = %d\n\n", room.number_ants);
-}
+	int ants;
+	char *line;
+	int c;
 
-void p(t_list *lst)
-{
-	t_room room;
-
-	room = *(t_room *)lst->content;
-	printf(" -> room\nname: %s\n(%d, %d)\nstatus: ", room.name, room.x, room.y);
-	switch (room.status)
+	ants = -42;
+	if ((c = get_next_line(STDIN_FILENO, &line)) == 1)
 	{
-		case start:
-			printf("start");
-			break;
-		case end:
-			printf("end");
-			break;
-		default:
-			printf("usual");
+		if (!ft_isnumber(line))
+		{
+			ft_strdel(&line);
+			error_exit("ERROR");
+		}
+		ants = ft_atoi(line);
+		ft_putendl(line);
+		ft_strdel(&line);
 	}
-	printf("\nnumber_ants = %d\n\n", room.number_ants);
+	printf("%d\n", c);
+	return (ants);
 }
 
 int main(void)
 {
 	char *line;
+	char **tbl;
 	int ants;
 	t_list *lst;
 	t_room room;
 	enum e_status status;
 
 	ants = get_number_of_ants();
-	lst = NULL;
-	while (get_next_line(STDIN_FILENO, &line) == 1)
-	{
-		if (is_comment(line))
-		{
-			ft_putendl(line);
-			ft_strdel(&line);
-			continue;
-		}
-		status = usual;
-		if (is_start_or_end(line))
-		{
-			status = line[2] == 's' ? start : end;
-			ft_putendl(line);
-			ft_strdel(&line);
-			if (get_next_line(STDIN_FILENO, &line) != 1)
-				error_exit("After ##start or ##end should be a room!");
-			if (*line == '#' || *line == 'L')
-				error_exit(
-						"A room will never start with the character 'L' nor the character '#'");
-		}
-		room = get_room(line, status);
-		ft_lstadd(&lst, ft_lstnew(&room, sizeof(room)));
-		ft_putendl(line);
-		ft_strdel(&line);
-	}
-	while(42);
+	printf("ants = %i\n", ants);
+	while (42);
 	return (0);
 }

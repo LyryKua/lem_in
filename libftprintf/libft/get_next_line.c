@@ -3,59 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khrechen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: osapon <khrechen@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/19 14:40:30 by khrechen          #+#    #+#             */
-/*   Updated: 2018/02/04 16:21:42 by khrechen         ###   ########.fr       */
+/*   Created: 2018/01/08 10:46:00 by khrechen          #+#    #+#             */
+/*   Updated: 2018/01/08 10:46:00 by khrechen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <stdlib.h>
-
-#include "get_next_line.h"
+#include <unistd.h>
 #include "libft.h"
+#include "get_next_line.h"
 
-static int	read_in_str(int const fd, char **str, char *buf)
+static ssize_t		ft_line(char **static_content, char **line)
 {
-	int			ret;
-	char		*tmp;
+	char			*temp;
 
-	if ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+	if (!*static_content || !**static_content || *static_content == '\0')
+		return (0);
+	if (!ft_strchr(*static_content, '\n'))
 	{
-		buf[ret] = '\0';
-		if (!(tmp = ft_strjoin(*str, buf)))
+		if (!(*line = ft_strdup(*static_content)))
 			return (-1);
-		free(*str);
-		*str = tmp;
+		ft_strdel(static_content);
 	}
-	return (ret);
+	else
+	{
+		if (!(*line = ft_strsub(*static_content, 0,
+					ft_strchr(*static_content, '\n') - *static_content)))
+			return (-1);
+		temp = *static_content;
+		*static_content = ft_strdup((ft_strchr(temp, '\n')) + 1);
+		ft_strdel(&temp);
+	}
+	return (1);
 }
 
-int			get_next_line(int const fd, char **line)
+static t_list		*get_temp_fd(size_t fd, t_list **static_list)
 {
-	static char	*str;
-	char		buf[BUFF_SIZE + 1];
-	char		*n_index;
-	int			ret;
+	t_list			*temp;
 
-	if (!str && !(str = (char *)ft_memalloc(sizeof(str))))
-		return (ERROR);
-	n_index = ft_strchr(str, '\n');
-	while (!n_index)
-		if (!(ret = read_in_str(fd, &str, buf)))
+	if (*static_list)
+	{
+		temp = *static_list;
+		while (temp)
 		{
-			if ((n_index = ft_strchr(str, '\0')) == str)
-				return (FINISH);
+			if (temp->content_size == fd)
+				return (temp);
+			temp = temp->next;
 		}
-		else if (ret < 0)
-			return (ERROR);
-		else
-			n_index = ft_strchr(str, '\n');
-	if (!(*line = ft_strsub(str, 0, n_index - str)))
-		return (ERROR);
-	n_index = ft_strdup(n_index + 1);
-	free(str);
-	str = n_index;
-	return (READ);
+	}
+	if (!(temp = (t_list*)malloc(sizeof(t_list))))
+		return (NULL);
+	temp->content_size = fd;
+	if (!(temp->content = ft_strdup("\0")))
+	{
+		free(temp);
+		return (NULL);
+	}
+	temp->next = *static_list;
+	*static_list = temp;
+	return (temp);
+}
+
+int					get_next_line(const int fd, char **line)
+{
+	char			buff[BUFF_SIZE + 1];
+	char			*str;
+	ssize_t			ret;
+	static t_list	*static_list = NULL;
+	t_list			*temp;
+
+	if (fd < 0 || !line || BUFF_SIZE < 1 || read(fd, buff, 0) < 0)
+		return (-1);
+	if (!(temp = get_temp_fd((size_t)fd, &static_list)))
+		return (-1);
+	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	{
+		buff[ret] = '\0';
+		str = temp->content;
+		temp->content = ft_strjoin(str, buff);
+		ft_strdel(&str);
+		if (ft_strchr((char*)temp->content, '\n'))
+			break ;
+	}
+	if ((ret = ft_line((char**)&(temp->content), line)) == -1)
+		return (-1);
+	if (static_list->content == NULL || static_list->content == '\0')
+		ft_strdel((char**)&static_list->content);
+	return (((ret > 0) ? 1 : 0));
 }
