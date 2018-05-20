@@ -24,10 +24,9 @@ int read_number_of_ants(void)
 {
 	int ants;
 	char *line;
-	int c;
 
-	ants = -42;
-	if ((c = get_next_line(STDIN_FILENO, &line)) == 1)
+	ants = 0;
+	if (get_next_line(STDIN_FILENO, &line) == 1)
 	{
 		if (!ft_isnumber(line))
 		{
@@ -35,10 +34,12 @@ int read_number_of_ants(void)
 			error_exit("ERROR");
 		}
 		ants = ft_atoi(line);
-		ft_putendl(line);
+		if (!ants)
+			error_exit("ERROR");
 		ft_strdel(&line);
 	}
-	printf("%d\n", c);
+	if (!ants)
+		error_exit("ERROR");
 	return (ants);
 }
 
@@ -50,11 +51,12 @@ int main(void)
 	t_list *rooms;
 	t_room room;
 	enum e_status status;
+	int tmp;
 
 	ants = read_number_of_ants();
 	rooms = read_rooms();
 //	links = read_links();
-	printf("ants = %i\n", ants);
-	print_rooms(rooms);
+//	printf("ants = %i\n", ants);
+//	print_rooms(rooms);
 	return (0);
 }

@@ -24,7 +24,7 @@ void print_rooms(t_list *rooms)
 				printf("start");
 				break;
 			case end:
-				printf("end  ");
+				printf("  end");
 				break;
 			default:
 				printf("usual");

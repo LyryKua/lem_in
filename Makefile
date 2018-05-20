@@ -48,7 +48,7 @@ LIBFTPRINTF :=			$(LIBFTPRINTF_DIR)libftprintf.a
 
 CC :=					gcc
 
-INC :=					-I$(LIBFTPRINTF_DIR)includes/		\
+INC :=					-I$(LIBFTPRINTF_DIR)includes		\
 						-I$(LIBFTPRINTF_DIR)libft/includes	\
 						-I$(INC_DIR)
 #CFLAGS :=				-Wall -Werror -Wextra
@@ -56,7 +56,7 @@ LIBFTPRINTF_FLAGS :=	-L$(LIBFTPRINTF_DIR) -lftprintf
 
 all: $(NAME)
 
-$(NAME): $(LIBFTPRINTF) $(OBJS_PATHS) 	
+$(NAME): $(LIBFTPRINTF) $(OBJS_PATHS)
 	$(CC) $(LIBFTPRINTF_FLAGS) $(OBJS_PATHS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) created$(NORMAL)"
 
