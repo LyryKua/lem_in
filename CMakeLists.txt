@@ -19,6 +19,6 @@ set(HEADERS
 set(SOURCES
         sources/main.c
         sources/error_exit.c
-        sources/print_room.c)
+        sources/print_rooms.c sources/read_rooms.c)
 
 add_executable(lem_in ${SOURCES} ${HEADERS})

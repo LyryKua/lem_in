@@ -13,6 +13,8 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
+# include "libft.h"
+
 typedef struct s_room	t_room;
 
 enum	e_status
@@ -31,6 +33,7 @@ struct	s_room
 	unsigned int	number_ants;
 };
 
-void error_exit(char *msg);
+t_list	*read_rooms(void);
+void	error_exit(char *msg);
 
 #endif

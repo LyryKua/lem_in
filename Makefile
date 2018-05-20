@@ -34,7 +34,9 @@ SRCS_DIR :=				sources/
 OBJS_DIR :=				objects/
 
 SRCS :=					main.c			\
-						error_exit.c
+						error_exit.c	\
+						print_rooms.c	\
+						read_rooms.c
 
 OBJS :=					$(SRCS:.c=.o)
 

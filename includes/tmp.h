@@ -7,6 +7,7 @@
 
 #include "lem_in.h"
 
-void print_room(t_room room);
+void print_rooms(t_list *rooms);
+
 
 #endif //LEM_IN_TMP_H
