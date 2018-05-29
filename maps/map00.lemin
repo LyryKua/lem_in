@@ -1,8 +1,11 @@
 42
 ##start
 first 1 0
-##end
 second 5 0
 #mama mula ramy
 third 9 0
+##end
 fourth 13 0
+first-second
+second-third
+third-fourth

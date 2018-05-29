@@ -29,17 +29,14 @@ int read_number_of_ants(void)
 	if (get_next_line(STDIN_FILENO, &line) == 1)
 	{
 		if (!ft_isnumber(line))
-		{
-			ft_strdel(&line);
-			error_exit("ERROR");
-		}
+			error_exit("ERROR", &line);
 		ants = ft_atoi(line);
 		if (!ants)
-			error_exit("ERROR");
+			error_exit("ERROR", &line);
 		ft_strdel(&line);
 	}
 	if (!ants)
-		error_exit("ERROR");
+		error_exit("ERROR", NULL);
 	return (ants);
 }
 
@@ -56,7 +53,7 @@ int main(void)
 	ants = read_number_of_ants();
 	rooms = read_rooms();
 //	links = read_links();
-//	printf("ants = %i\n", ants);
-//	print_rooms(rooms);
+	printf("ants = %i\n", ants);
+	print_rooms(rooms);
 	return (0);
 }

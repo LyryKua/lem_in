@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include "libft.h"
 
-void error_exit(char *line)
+void error_exit(char *msg, char **as)
 {
-	ft_putendl_fd(line, 2);
+	ft_strdel(as);
+	ft_putendl_fd(msg, 2);
 	exit(42);
 }

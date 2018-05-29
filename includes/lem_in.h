@@ -16,6 +16,7 @@
 # include "libft.h"
 
 typedef struct s_room	t_room;
+typedef struct s_link	t_link;
 
 enum	e_status
 {
@@ -33,7 +34,13 @@ struct	s_room
 	unsigned int	number_ants;
 };
 
+struct	t_link
+{
+	t_room	*room1;
+	t_room	*toom2;
+};
+
 t_list	*read_rooms(void);
-void	error_exit(char *msg);
+void	error_exit(char *msg, char **as);
 
 #endif

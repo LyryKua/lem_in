@@ -72,6 +72,11 @@ t_list *read_rooms(void)
 	rooms = NULL;
 	while (get_next_line(STDIN_FILENO, &line) == 1)
 	{
+		if (ft_strchr(line, '-'))
+		{
+			ft_strdel(&line);
+			return (rooms);
+		}
 		if (is_valid_room(line) || is_start_or_end(line))
 		{
 			status = usual;
@@ -80,16 +85,13 @@ t_list *read_rooms(void)
 				status = line[2] == 's' ? start : end;
 				ft_strdel(&line);
 				if (get_next_line(STDIN_FILENO, &line) != 1)
-					error_exit("ERROR");
+					error_exit("ERROR", NULL);
 			}
 			room = get_room(line, status);
 			ft_lstadd(&rooms, ft_lstnew(&room, sizeof(room)));
 		}
 		else if (!is_comment(line) && !is_start_or_end(line))
-		{
-			ft_strdel(&line);
-			error_exit("ERROR");
-		}
+			error_exit("ERROR", &line);
 		ft_strdel(&line);
 	}
 	return (rooms);
